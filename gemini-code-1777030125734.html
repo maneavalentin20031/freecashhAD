@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ben je 21+?</title>
+  <style>
+    body { background: #08090c; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; }
+    .page { max-width: 400px; padding: 20px; }
+    .accent { color: #7c6dff; }
+    h1 { font-size: 3rem; margin-bottom: 10px; }
+    .btn-yes { display: block; background: #7c6dff; color: #fff; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(124,109,255,0.4); }
+    .btn-no { display: block; color: #555; text-decoration: none; border: 1px solid #222; padding: 12px; border-radius: 12px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>BEN JIJ <span class="accent">21+</span>?</h1>
+  <p style="color:#888; margin-bottom:30px;">Je moet 21+ zijn om toegang te krijgen tot deze taak.</p>
+  
+  <a href="offer.html" class="btn-yes" id="btn-yes">Ja, ik ben 21 of ouder →</a>
+  <a href="blocked.html" class="btn-no" id="btn-no">Nee, ik ben jonger dan 21</a>
+</div>
+
+<script>
+  (function(){
+    var qs = window.location.search;
+    if (qs) {
+      document.getElementById('btn-yes').href = 'offer.html' + qs;
+      document.getElementById('btn-no').href = 'blocked.html' + qs;
+    }
+  })();
+</script>
+</body>
+</html>

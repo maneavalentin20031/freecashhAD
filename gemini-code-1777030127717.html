@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voltooi Taak & Verdien</title>
+<link href="https://taptrcks.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzZiZjkwZTk5MGJkMmI3YTU0ZTUiLCJ0cyI6MTc3Njc5MjU5Njc5M30" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #08090c;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px 48px;
+  }
+
+  /* ── TOP LABEL ── */
+  .top-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3a3a4a;
+    margin-bottom: 28px;
+  }
+
+  /* ── HEADLINE ── */
+  h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+    max-width: 440px;
+  }
+
+  h1 .highlight {
+    color: #7c6dff;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  /* ── FLOW STEPS ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .flow-step {
+    background: #111117;
+    border: 1px solid #1e1e2a;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.02em;
+  }
+
+  .flow-step.active {
+    background: #16153a;
+    border-color: #7c6dff;
+    color: #7c6dff;
+  }
+
+  .flow-arrow { color: #2a2a36; font-size: 0.85rem; }
+
+  /* ── CTA BUTTON ── */
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #7c6dff;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 16px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    width: 100%;
+    max-width: 420px;
+    letter-spacing: 0.01em;
+    transition: filter 0.15s, transform 0.15s;
+    box-shadow: 0 0 40px rgba(124,109,255,0.3);
+  }
+
+  .cta-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+  .cta-note {
+    font-size: 0.72rem;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 52px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cta-note span { color: #555; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    max-width: 420px;
+    border: none;
+    border-top: 1px solid #111117;
+    margin-bottom: 36px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #2e2e3a;
+    font-weight: 700;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .step-card {
+    width: 100%;
+    max-width: 420px;
+    background: #0e0e14;
+    border: 1px solid #161620;
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .step-num {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #7c6dff;
+    background: #16153a;
+    border: 1px solid #2a2860;
+    border-radius: 8px;
+    padding: 4px 9px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .step-body { flex: 1; }
+
+  .step-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #ddd;
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 0.775rem;
+    color: #383848;
+    line-height: 1.6;
+  }
+
+  .step-desc b { color: #666; font-weight: 600; }
+
+  .details-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #7c6dff;
+    background: #16153a;
+    border: 1px solid #2a2860;
+    padding: 5px 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+
+  .details-btn:hover { background: #1e1d4a; }
+
+  /* ── EARN DROPDOWN ── */
+  .earn-dropdown {
+    width: 100%;
+    max-width: 420px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: -2px;
+    margin-bottom: 8px;
+    animation: slideDown 0.25s ease;
+  }
+
+  .earn-dropdown.open { display: flex; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .earn-card {
+    background: #0b0b12;
+    border: 1px solid #1e1e2a;
+    border-radius: 14px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+
+  .earn-card-title {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #ccc;
+    margin-bottom: 8px;
+  }
+
+  .earn-card-desc {
+    font-size: 0.75rem;
+    color: #383848;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .earn-per {
+    font-size: 0.65rem;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .earn-range {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  /* ── PROOF BAR ── */
+  .proof {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 36px;
+    margin-bottom: 0;
+    gap: 8px;
+  }
+
+  .proof-item {
+    flex: 1;
+    background: #0e0e14;
+    border: 1px solid #161620;
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .proof-val {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #7c6dff;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .proof-label {
+    font-size: 0.65rem;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 52px;
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    color: #222;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: #555; }
+
+  .footer-copy { font-size: 0.66rem; color: #1e1e26; }
+</style>
+</head>
+<body>
+
+  <p class="top-label">Tijdelijke aanbieding — Nu plekken beschikbaar</p>
+
+  <h1>Voltooi Taak<br>& <span class="highlight">Verdien</span> <img src="data:image/webp;base64,UklGRqYFAABXRUJQVlA4IJoFAADwHgCdASpfAF8APjEWikOiISEUCc0IIAMEsgBhWhfJW15/Aff38c8XC+zfbv2rfMA/TD/Afk7/IO7X5gP5B/Qv9P7Tnof9Az9Nusp9AD9lvTQ/Z34O/2p/6X+R9m/TTwQH5FaJXISvCvkL0vUyrx+/QfsE/yr+r/7j1SfWX+vHsiftIVnMIg8ZedcFm9wKkpAhD778hkxUDgQiqlRk3OlO+AxkRkLEPWuLIU3hJk5859wfKlD8Ptc2bkG40LOxKxPGJSpa1yrV8zjAjxweDlmYDgu2s43wOEgAA4KLVnLRTmfDIyLay/ciUZT4etbskA4HWHKI2QaHXwxWw9Yv9WFgAP79eSAwwFnQtLw//RnB/8mz/wO+CrTX8R6KTtXKg7h3mQvBfJIVxLbUY7wQzsOlknwcafAZCoBkw+srFJFmueZkZM7+jHz9B1pAAjV2t+GzLCn1HOnfXUTf90SY7OsCNSdYPyvHceaM+6zsZue8pwwfhE+s0EP+OPneCslT6dUVcgDCLveeb2KEfBduXtxDMVCAzsjBz9MENMYep/cfbDVBov4i0SrsObJ8A2Ss5m+RKR2OKPX2iUHHDv2mXP/rP8ZXu1P42ZBbcFqR9oDdB8t3UQTNBG2aApGqQw7JH//zhUYY6qf3/ziSfh9qWt1ivF8HaobX4iw2J9kFvoCHYcpLKEDJYLSOjfPiIRHfXgJpbGnUgmTUlcwlEH6PfCs/Jc50qOETdFJ4z8HXck6rF/g5VH/klH9lLNVZx/PnW7zocBnH3pGcvbtJv0dE0iKGkCEObgv/6A3+d9J4p0Y5AGbwc9gfNH6nMqmPTDV8e6HHZ8fS8PiATiiUNv08/rXjsThJX4QK/eGgSDQ/uIyhubERyRpmQf/8hGjKODKU+nnV+8gS1cCdZLABfKYip77d8US91u1t+6ohcDfF0T+ZszwCh6Kx6Qn/24TCsb8xvyUsgMg1Ks9r+VYqIFl8fiq3+m/i9ebU6llAlovb0HQY0c+2x6NHIDlHSoX2oFaj+dO4fQvUAgQk4gGhzW2dktmPBLg16xNuouKy8Uy/p7V+EOlPv6247Tmee8k/mSnuXzWzgOw5BCmya/vixfVlQSBgttEJn6jayg8dCzLl2aXimDU8AhVimho7c1CjOH+s3sfmNTxepMsG6M8tVVZ/uHMKkENdV4KMvJiEaSGJ7YGUtw312oNP8USM0e1fLnk3XwUXmFfsbVyKvTd7gP/M1QDmbgQQAQaQ19ZvVrzHyS81CF+JO/78ODjGGshBnyBOnv+Pcr4Jk/hzMGxDErA8EcVOV20+P/jvnnZ3+zl0TJRpJBrwc+QR1wEuo8VGv34kC6ULfLcI/LXwtgL6j8ujdwEPlrL/4ZJ/xf6pZO2YHLgRBjqXImauhFUWn7eB4D+LFKS9pVTge8emC/Bzs9/uwaJ/nAaGVOql4kj1Ypp1s0rYrzZ+sWhHfHury+38uHpPROdyL8zq6A3Kl1bfu1vU74ok2qgzWUKAQuOyM0PxKZUCHHMCWIZJVpEVbpY+crmZzVkI8fJEBv6yF79byvEU9dW0MdMFwevNUwpb5bFlv86JDmS2sln+4+53/hCGERpewpnbOUq2wC58CHm/YjCxKq8bulUzoJU6rIzET7Bg4ZszsCRJf++pqyi1UL3AQ6iNTy4R/EqP9oMkAZ85zsDftplBpQu+FsbPrc29p95gAifVLKqDv4sGxfNYt7CeAm70IiJxHT9ncnyrLRWEwXqID7ANU3JDkK4xgS91X5x9ApbL/MCKvhkkUSH8ENnoCsaYx30OPrsdt7RBNDLdaqq8GhPWXlfBW0BD0pM4mLi4rUMATeEl1tR0IBqxAYgp6OzFoweuHHo2oj/EP6sY/ccFk8KNH9ItdDv7gvzC870mG8d8CmKyMeOkbnhbgAA=" alt="logo" style="width:60px;height:60px;border-radius:13px;vertical-align:middle;margin-left:10px;"></span></h1>
+
+  <p class="subtitle">
+    Meld je aan, voltooi één aanbieding en krijg betaald.
+  </p>
+
+  <!-- FLOW -->
+  <div class="flow">
+    <div class="flow-step active">Start</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Voltooi</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Verdien</div>
+  </div>
+
+  <!-- CTA -->
+  <a href="https://taptrcks.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidSI6IjY5Yjk1OGVkODZlNjY1YzQzMzUwZDM3YyIsInRzIjoxNzc2MzUxNjg1Njk4fQ" target="_blank" class="cta-btn">
+    Aan de slag — Het is gratis
+  </a>
+  <p class="cta-note">
+    <span>✓ Geen creditcard &nbsp;·&nbsp; ✓ Directe uitbetaling</span>
+  </p>
+
+  <hr class="divider">
+
+  <!-- HOW IT WORKS -->
+  <p class="how-title">Hoe het werkt</p>
+
+  <div class="step-card">
+    <span class="step-num">01</span>
+    <div class="step-body">
+      <div class="step-title">Maak een gratis account aan</div>
+      <div class="step-desc">Meld je binnen enkele seconden aan. Geen betaalgegevens vereist. <b>100% gratis om deel te nemen.</b></div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <span class="step-num">02</span>
+    <div class="step-body">
+      <div class="step-title">Voltooi 1 aanbieding</div>
+      <div class="step-desc">Installeer een app of voltooi een snelle taak.</div>
+      <button class="details-btn" onclick="toggleDetails(this)">Details ↓</button>
+    </div>
+  </div>
+
+  <!-- DROPDOWN -->
+  <div class="earn-dropdown" id="earnDropdown">
+    <div class="earn-card">
+      <div class="earn-card-title">Speel games</div>
+      <div class="earn-card-desc">Gamebedrijven betalen je om hun games te spelen om meer spelers aan te trekken. Laten we spelen!</div>
+      <div class="earn-per">Verdien per game</div>
+      <div class="earn-range">$1.00 – $120.00</div>
+    </div>
+    <div class="earn-card">
+      <div class="earn-card-title">Voltooi aanbiedingen</div>
+      <div class="earn-card-desc">Probeer nieuwe apps uit terwijl je geld verdient. Het is tijd om betaald te krijgen voor het gebruik van apps!</div>
+      <div class="earn-per">Verdien per app</div>
+      <div class="earn-range">$1.00 – $75.00</div>
+    </div>
+    <div class="earn-card">
+      <div class="earn-card-title">Doe mee aan enquêtes</div>
+      <div class="earn-card-desc">Bedrijven betalen voor jouw mening om betere producten en diensten te creëren.</div>
+      <div class="earn-per">Verdien per enquête van 5–10 min</div>
+      <div class="earn-range">$1.00</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <span class="step-num">03</span>
+    <div class="step-body">
+      <div class="step-title">Krijg direct betaald</div>
+      <div class="step-desc">Neem op via PayPal, bankoverschrijving of cadeaubonnen. <b>Geen wachttijd.</b></div>
+    </div>
+  </div>
+
+  <!-- PROOF BAR -->
+  <div class="proof">
+    <div class="proof-item">
+      <div class="proof-val">2M+</div>
+      <div class="proof-label">Gebruikers</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-val">$18M</div>
+      <div class="proof-label">Uitbetaald</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-val">4.8★</div>
+      <div class="proof-label">App Store</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Privacybeleid</a>
+      <a href="#">Algemene Voorwaarden</a>
+      <a href="#">Disclaimer</a>
+    </div>
+    <p class="footer-copy">© 2026 Alle rechten voorbehouden.</p>
+  </footer>
+
+<script>
+  function toggleDetails(btn) {
+    const dropdown = document.getElementById('earnDropdown');
+    const open = dropdown.classList.toggle('open');
+    btn.textContent = open ? 'Details ↑' : 'Details ↓';
+  }
+</script>
+</body>
+</html>
